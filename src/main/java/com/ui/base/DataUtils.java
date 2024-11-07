@@ -23,8 +23,8 @@ import java.util.stream.Collectors;
 
 @Log
 public class DataUtils {
-    private static String configPropertyPath = "/config.properties";
-    private static String EncryptionYaml = "/properties/Encryption_test.yaml";
+    private static final String configPropertyPath = "/config.properties";
+    private static final String EncryptionYaml = "/properties/Encryption_test.yaml";
     private static Properties props = null;
     private static String OS = null;
 
@@ -106,7 +106,7 @@ public class DataUtils {
 
     public static void sleep(int seconds) {
         try {
-            Thread.sleep(seconds * 1000);
+            Thread.sleep(seconds * 1000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -254,7 +254,7 @@ public class DataUtils {
 
         try {
             String contentsOfFile = Files.lines(fullPath).collect(Collectors.joining("\n"));
-            log.info("Input File Path  " + fullPath.toString());
+            log.info("Input File Path  " + fullPath);
             return contentsOfFile;
         } catch (IOException e) {
             log.info(fullPath.toString());
