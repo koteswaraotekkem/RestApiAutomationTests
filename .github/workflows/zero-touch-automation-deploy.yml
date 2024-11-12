@@ -1,0 +1,38 @@
+name: CICD
+
+on:
+  push:
+    branches: [ "pipeline_deploy" ]
+  pull_request:
+    branches: [ "pipeline_deploy" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build the package
+        id: build-package
+        run: |
+          p=`pwd`
+          ls -lrt
+          java -version
+          google-chrome --version
+          mvn install:install-file -Dfile="$p/src/lib/ATUTestRecorder-2.1.jar" -DpomFile="$p/src/lib/ATUTestRecorder-2.1.pom"
+          sudo apt-get install xvfb
+          xvfb-run --auto-servernum mvn -Dtestng.suiteXmlFiles="$p/src/test/resources/smoke.xml" test
+
+      - name: Tear down xvfb
+        run: killall Xvfb
