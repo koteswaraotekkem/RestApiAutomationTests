@@ -37,6 +37,7 @@ public class UiTestBase {
 
     @BeforeClass(alwaysRun = true)
     public void reInitDriver() {
+        Configuration.browserVersion="129.0";
         System.out.println(url);
         log.info("quit opened instance and open new instance");
         Selenide.closeWebDriver();
@@ -47,6 +48,7 @@ public class UiTestBase {
 
     @BeforeClass(alwaysRun = true)
     public void initDrivers() {
+        Configuration.browserVersion="129.0";
         //setBrowser(EnvVars.BROWSER);
         WebDriverRunner.closeWebDriver();
         log.info("Initialising WebDriver");
